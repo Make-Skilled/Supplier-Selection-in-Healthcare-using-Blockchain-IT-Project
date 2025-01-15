@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stored Products</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f0f8ff, #cce7ff);
+    }
+    .container {
+      text-align: left;
+      width: 90%;
+      max-width: 1000px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px; /* Increased font size for the header */
+    }
+    #product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .product-item {
+      background: #f9f9f9;
+      padding: 15px;
+      width: 250px; /* Slightly wider product items */
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      text-align: center;
+      font-size: 16px; /* Increased font size for product details */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+      margin-bottom: 10px; /* Reduced space between rows */
+    }
+    img {
+      width: 160px; /* Larger image size */
+      height: 160px; /* Larger image size */
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    p {
+      margin: 5px 0; /* Reduced margin between lines */
+      font-size: 14px; /* Increased font size for text in product item */
+    }
+    button {
+      margin-top: 20px;
+      padding: 8px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Stored Products</h1>
+    <div id="product-list">
+      <!-- Products will be dynamically loaded here -->
+    </div>
+    <button onclick="goBack()">Back to Dashboard</button>
+  </div>
+
+  <script>
+    function loadProducts() {
+      const products = JSON.parse(localStorage.getItem('products')) || [];
+      const productList = document.getElementById('product-list');
+      productList.innerHTML = '';
+
+      if (products.length === 0) {
+        productList.innerHTML = '<p>No products available.</p>';
+        return;
+      }
+
+      products.forEach((product) => {
+        const productItem = document.createElement('div');
+        productItem.className = 'product-item';
+        
+        // Display image if available
+        const productImage = product.image ? `<img src="${product.image}" alt="Product Image">` : '';
+
+        productItem.innerHTML = `
+          ${productImage}
+          <p><strong>Manufacturer:</strong> ${product.manufacturer}</p>
+          <p><strong>Product ID:</strong> ${product.id}</p>
+          <p><strong>Product Name:</strong> ${product.name}</p>
+          <p><strong>Expiry Date:</strong> ${product.expiry}</p>
+        `;
+        productList.appendChild(productItem);
+      });
+    }
+
+    function goBack() {
+      window.location.href = 'manufacturer.html';
+    }
+
+    // Load products on page load
+    window.onload = loadProducts;
+  </script>
+</body>
+</html>

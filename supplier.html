@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supplier Details</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: url('https://static.vecteezy.com/system/resources/previews/024/675/760/original/green-background-hd-wallpaperss-free-download-free-vector.jpg') no-repeat center center/cover;
+      background-size: cover;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 900px;
+      background: rgba(195, 134, 81, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(8, 8, 8, 0.416);
+      padding: 20px;
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #37a92f;
+    }
+
+    .search-bar {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .search-bar input {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      width: 200px;
+    }
+
+    .info {
+      margin-bottom: 20px;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 15px;
+      height: 200px;
+    }
+
+    .info span {
+      display: block;
+      margin: 15px 0;
+    }
+
+    .info strong {
+      color: #54e73d;
+    }
+
+    .table-container {
+      position: relative;
+      overflow: hidden;
+      height: 200px; /* Increased height for sliding table */
+      margin-top: 20px;
+    }
+
+    .sliding-table {
+      display: flex;
+      flex-direction: column;
+      transition: transform 1s ease-in-out;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    table th, table td {
+      text-align: left;
+      padding: 10px;
+      color: #ffffff;
+    }
+
+    table th {
+      background: rgba(0, 0, 0, 0.9);
+      color: #00ffcc;
+      text-transform: uppercase;
+    }
+
+    tbody tr {
+      height: 60px; /* Adjusted for row spacing */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" id="searchBar" placeholder="Search Supplier...">
+    </div>
+
+    <h1>Supplier Details</h1>
+
+    <!-- Enlarged Supplier Details -->
+    <div class="info">
+      <span><strong>Supplier ID:</strong> SUP-00123</span>
+      <span><strong>Supplier Name:</strong> Global Health Supplies</span>
+      <span><strong>Location:</strong> Los Angeles, CA</span>
+    </div>
+
+    <!-- Enlarged Sliding Table -->
+    <div class="table-container">
+      <div class="sliding-table" id="slidingTable">
+        <table>
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Product ID</th>
+              <th>Delivery Date</th>
+              <th>Delivery Time</th>
+              <th>Expiry Date</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr>
+              <td>Paracetamol</td>
+              <td>PROD-001</td>
+              <td>2024-12-10</td>
+              <td>10:30 AM</td>
+              <td>2026-06-15</td>
+            </tr>
+            <tr>
+              <td>Vitamin C</td>
+              <td>PROD-002</td>
+              <td>2024-12-12</td>
+              <td>2:00 PM</td>
+              <td>2025-11-01</td>
+            </tr>
+            <tr>
+              <td>Loperamide</td>
+              <td>PROD-003</td>
+              <td>2024-12-15</td>
+              <td>4:15 PM</td>
+              <td>2026-01-20</td>
+            </tr>
+            <tr>
+              <td>Ibuprofen</td>
+              <td>PROD-004</td>
+              <td>2024-12-18</td>
+              <td>11:00 AM</td>
+              <td>2025-10-30</td>
+            </tr>
+            <tr>
+              <td>Laxatives</td>
+              <td>PROD-005</td>
+              <td>2024-12-20</td>
+              <td>1:00 PM</td>
+              <td>2026-03-15</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slidingTable = document.getElementById('slidingTable');
+    const rows = document.querySelectorAll('tbody tr');
+    const rowHeight = rows[0].offsetHeight;
+    let currentRow = 0;
+
+    function slideTable() {
+      currentRow = (currentRow + 1) % rows.length; // Loop back to the top
+      const offset = -currentRow * rowHeight;
+      slidingTable.style.transform = `translateY(${offset}px)`;
+    }
+
+    setInterval(slideTable, 3000); // Slide every 3 seconds
+
+    // Search functionality
+    const searchBar = document.getElementById('searchBar');
+    const tableBody = document.getElementById('tableBody');
+
+    searchBar.addEventListener('input', () => {
+      const query = searchBar.value.toLowerCase();
+      rows.forEach(row => {
+        const rowText = row.textContent.toLowerCase();
+        row.style.display = rowText.includes(query) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

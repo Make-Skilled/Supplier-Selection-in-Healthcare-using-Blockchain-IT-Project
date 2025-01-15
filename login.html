@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/slicknav.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/gijgo.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/animated-headline.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #d1eaff, #b3cde0, #d1eaff);
+    }
+    .container {
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      margin-top: 80px; /* Offset for fixed header */
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+    input {
+      width: 90%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    button {
+      width: 90%;
+      padding: 8px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .signup-prompt {
+      margin-top: 15px;
+    }
+    .signup-prompt a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    .signup-prompt a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-area">
+      <div class="main-header header-sticky">
+          <div class="container-fluid">
+              <div class="row align-items-center">
+                  <!-- Logo -->
+                  <div class="col-xl-2 col-lg-2 col-md-1">
+                      <div class="logo">
+                          <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                      </div>
+                  </div>
+                  <div class="col-xl-10 col-lg-10 col-md-10">
+                      <div class="menu-main d-flex align-items-center justify-content-end">
+                          <!-- Main-menu -->
+                          <div class="main-menu f-right d-none d-lg-block">
+                              <nav> 
+                                  <ul id="navigation">
+                                      <li><a href="index.html">Home</a></li>
+                                      <li><a href="about.html">About</a></li>
+                                      <li><a href="services.html">Services</a></li>
+                                      <!-- <li><a href="blog.html">Blog</a> -->
+                                          <ul class="submenu">
+                                              <!-- <li><a href="blog.html">Blog</a></li> -->
+                                              <!-- <li><a href="blog_details.html">Blog Details</a></li> -->
+                                              <li><a href="elements.html">Element</a></li>
+                                          </ul>
+                                      </li>
+                                      <li><a href="contact.html">Contact</a></li>
+                                  </ul>
+                              </nav>
+                          </div>
+                      </div>
+                  </div>   
+                  <!-- Mobile Menu -->
+                  <div class="col-12">
+                      <div class="mobile_menu d-block d-lg-none"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  </header>
+
+  <div class="container">
+    <h1>Login</h1>
+    <form action="LoginForm" method="post">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <div class="signup-prompt">
+      Don't have an account? <a href="/signup">Sign up here</a>.
+    </div>
+  </div>
+</body>
+</html>

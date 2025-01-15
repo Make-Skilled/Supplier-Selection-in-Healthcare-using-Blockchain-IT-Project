@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('https://th.bing.com/th/id/R.736040728c55961595dcabe2e94c5855?rik=Y%2fzvskm5AAzUXQ&riu=http%3a%2f%2fwww.webdesignhot.com%2fwp-content%2fuploads%2f2015%2f04%2fAbstract-Yellow-Green-Color-Background-Vector-Illustration.jpg&ehk=Hv5%2fbOM%2fM33kj28Yw11N%2fjon4Ajs%2bnrpKlDT2cGXfvQ%3d&risl=&pid=ImgRaw&r=0') no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh; /* Full viewport height */
+    }
+
+    .top-section {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px; /* Space between rows */
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.8); /* Transparent background */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+    }
+
+    .section h3 {
+      margin-bottom: 10px;
+      color: #388e3c;
+    }
+
+    .section p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .section button {
+      background: #81c784; /* Light green */
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .section button:hover {
+      background: #66bb6a; /* Darker green on hover */
+    }
+
+    .hospital-section {
+      background: rgba(255, 255, 255, 0.8); /* Transparent background */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      width: 90%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .hospital-section input,
+    .hospital-section textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.9); /* Slight transparency */
+    }
+
+    .hospital-section button {
+      background: #81c784; /* Light green */
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .hospital-section button:hover {
+      background: #66bb6a; /* Darker green on hover */
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Row with Manufacturer, Supplier, and Product Details -->
+  <div class="top-section">
+    <!-- Manufacturer Details -->
+    <div class="section">
+      <h3>Manufacturer Details</h3>
+      <p><strong>Name:</strong> HealthMed Pharma</p>
+      <p><strong>Address:</strong> 123 Pharma Street, NY</p>
+      <p><strong>Email:</strong> info@healthmedpharma.com</p>
+      <button>View More</button>
+    </div>
+
+    <!-- Supplier Details -->
+    <div class="section">
+      <h3>Supplier Details</h3>
+      <p><strong>Name:</strong> SupplyCo</p>
+      <p><strong>Contact:</strong> +1 9876543210</p>
+      <p><strong>Email:</strong> contact@supplyco.com</p>
+      <button>View More</button>
+    </div>
+
+    <!-- Product Details -->
+    <div class="section">
+      <h3>Product Details</h3>
+      <p><strong>Product ID:</strong> 12345</p>
+      <p><strong>Manufacture Date:</strong> 2023-12-01</p>
+      <p><strong>Expiry Date:</strong> 2025-12-01</p>
+      <button>View More</button>
+    </div>
+  </div>
+
+  <!-- Hospital Details (Vertical Section) -->
+  <div class="hospital-section">
+    <h3>Hospital Details</h3>
+    <input type="text" placeholder="Hospital Name">
+    <input type="text" placeholder="Hospital Address">
+    <textarea placeholder="Additional Notes"></textarea>
+    <button>Save Details</button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manufacturer Dashboard</title>
+  <style>
+    /* Existing CSS */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #d1eaff, #b3cde0, #d1eaff);
+      flex-direction: column;
+    }
+    header {
+      width: 100%;
+      background-color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      text-decoration: none;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      font-size: 16px;
+      color: #333;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: #4caf50;
+    }
+    .container {
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      margin-top: 80px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+    input {
+      width: 90%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    button {
+      width: 90%;
+      padding: 8px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Service</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Manufacturer Dashboard</h1>
+    <form onsubmit="addProduct(event)">
+      <div class="form-group">
+        <label for="manufacturer-name">Manufacturer Name</label>
+        <input type="text" id="manufacturer-name" placeholder="Enter manufacturer name" required>
+      </div>
+      <div class="form-group">
+        <label for="product-id">Product ID</label>
+        <input type="text" id="product-id" placeholder="Enter unique product ID" required>
+      </div>
+      <div class="form-group">
+        <label for="product-name">Product Name</label>
+        <input type="text" id="product-name" placeholder="Enter product name" required>
+      </div>
+      <div class="form-group">
+        <label for="expiry-date">Expiry Date</label>
+        <input type="date" id="expiry-date" required>
+      </div>
+      <div class="form-group">
+        <label for="product-image">Product Image</label>
+        <input type="file" id="product-image" accept="image/*" required>
+      </div>
+      <button type="submit">Add Product</button>
+    </form>
+  </div>
+
+  <script>
+    function addProduct(event) {
+      event.preventDefault();
+
+      const manufacturerName = document.getElementById('manufacturer-name').value;
+      const productId = document.getElementById('product-id').value;
+      const productName = document.getElementById('product-name').value;
+      const expiryDate = document.getElementById('expiry-date').value;
+      const productImage = document.getElementById('product-image').files[0];
+
+      if (!productImage) {
+        alert('Please upload an image.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        const product = {
+          manufacturer: manufacturerName,
+          id: productId,
+          name: productName,
+          expiry: expiryDate,
+          image: reader.result, // Store the image as base64 string
+        };
+
+        // Retrieve stored products or initialize an empty array
+        const products = JSON.parse(localStorage.getItem('products')) || [];
+        products.push(product);
+
+        // Save updated list to localStorage
+        localStorage.setItem('products', JSON.stringify(products));
+
+        // Redirect to the product list page
+        window.location.href = 'product-list.html';
+      };
+
+      reader.readAsDataURL(productImage);
+    }
+  </script>
+</body>
+</html>

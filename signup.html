@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #d1eaff, #b3cde0, #d1eaff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    header {
+      width: 100%;
+      background-color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      text-decoration: none;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      font-size: 16px;
+      color: #333;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: #4caf50;
+    }
+    .container {
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      margin-top: 80px; /* Offset for fixed header */
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .roles {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+    .role-box {
+      width: 100px;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .role-box:hover {
+      background: rgba(0, 0, 0, 0.3);
+      transform: scale(1.1);
+    }
+    .form-container {
+      display: none;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+    input {
+      width: 90%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    button {
+      width: 90%;
+      padding: 8px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Service</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Select Your Role</h1>
+    <div class="roles">
+      <div class="role-box" onclick="toggleForm('manufacturer-form')">Manufacturer</div>
+      <div class="role-box" onclick="toggleForm('supplier-form')">Supplier</div>
+      <div class="role-box" onclick="toggleForm('hospital-form')">Hospital</div>
+    </div>
+
+    <!-- Manufacturer Form -->
+    <div class="form-container" id="manufacturer-form">
+      <h2>Manufacturer Signup</h2>
+      <form onsubmit="submitForm(event, 'manufacturer')">
+        <div class="form-group">
+          <label for="manufacturer-name">Full Name</label>
+          <input type="text" id="manufacturer-name" required>
+        </div>
+        <div class="form-group">
+          <label for="manufacturer-email">Email</label>
+          <input type="email" id="manufacturer-email" required>
+        </div>
+        <div class="form-group">
+          <label for="manufacturer-password">Password</label>
+          <input type="password" id="manufacturer-password" required>
+        </div>
+        <div class="form-group">
+          <label for="manufacturer-confirm-password">Confirm Password</label>
+          <input type="password" id="manufacturer-confirm-password" required>
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function toggleForm(formId) {
+      document.querySelectorAll('.form-container').forEach(form => {
+        form.style.display = 'none';
+      });
+      document.getElementById(formId).style.display = 'block';
+    }
+
+    function submitForm(event, role) {
+      event.preventDefault();
+
+      const name = document.getElementById(`${role}-name`).value;
+      const email = document.getElementById(`${role}-email`).value;
+      const password = document.getElementById(`${role}-password`).value;
+      const confirmPassword = document.getElementById(`${role}-confirm-password`).value;
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+
+      const userDetails = { role, name, email, password };
+      localStorage.setItem(email, JSON.stringify(userDetails));
+
+      alert(`${role.charAt(0).toUpperCase() + role.slice(1)} Signup Successful! Redirecting to login...`);
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>
