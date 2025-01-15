@@ -1,0 +1,117 @@
+{
+  "contractName": "supplierSelection",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/supplierSelection.sol\":\"supplierSelection\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/supplierSelection.sol\":{\"keccak256\":\"0xffb78655254f364e57a97993392d1a9f571ad3801227ee3506cd4df03e0f4dc0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6c52ede7125b3076dfeb17272d763628e987ac855de7ad0221e5538f6e5657b6\",\"dweb:/ipfs/QmcvHHTLHxNAGYMwyHKrMdEJVeJVKowb3EUVkn8KwDmyzC\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212200c96aa1f4e1bd06d25d6be71a0a360ab5a074b972736c535ffd2f0a6e3d07e8064736f6c63430008130033",
+  "deployedBytecode": "0x6080604052600080fdfea26469706673582212200c96aa1f4e1bd06d25d6be71a0a360ab5a074b972736c535ffd2f0a6e3d07e8064736f6c63430008130033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "66:59:0:-:0;;;97:26;;;;;;;;;;66:59;;;;;;",
+  "deployedSourceMap": "66:59:0:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\ncontract supplierSelection {\n  constructor() public {\n  }\n}\n",
+  "sourcePath": "C:\\Users\\Sudheer\\Supplier-Selection-in-Healthcare-using-Blockchain-IT-Project\\contracts\\supplierSelection.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/supplierSelection.sol",
+    "exportedSymbols": {
+      "supplierSelection": [
+        6
+      ]
+    },
+    "id": 7,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".22",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:32:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "supplierSelection",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 6,
+        "linearizedBaseContracts": [
+          6
+        ],
+        "name": "supplierSelection",
+        "nameLocation": "75:17:0",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 4,
+              "nodeType": "Block",
+              "src": "118:5:0",
+              "statements": []
+            },
+            "id": 5,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "108:2:0"
+            },
+            "returnParameters": {
+              "id": 3,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "118:0:0"
+            },
+            "scope": 6,
+            "src": "97:26:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7,
+        "src": "66:59:0",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:94:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.19+commit.7dd6d404.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.16",
+  "updatedAt": "2025-01-15T07:32:50.009Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
