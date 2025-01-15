@@ -66,4 +66,27 @@ contract userManagement {
       return false;
     }
   }
+  function viewUsersByRole(string memory role) public view returns (User[] memory) {
+        uint256 count = 0;
+
+        // Count users with the specified role
+        for (uint256 i = 0; i < userAddresses.length; i++) {
+            if (keccak256(bytes(users[userAddresses[i]]._userRole)) == keccak256(bytes(role))) {
+                count++;
+            }
+        }
+
+        // Create an array to hold the matching users
+        User[] memory filteredUsers = new User[](count);
+        uint256 index = 0;
+
+        for (uint256 i = 0; i < userAddresses.length; i++) {
+            if (keccak256(bytes(users[userAddresses[i]]._userRole)) == keccak256(bytes(role))) {
+                filteredUsers[index] = users[userAddresses[i]];
+                index++;
+            }
+        }
+
+        return filteredUsers;
+    }
 }

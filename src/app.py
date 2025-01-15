@@ -1,7 +1,6 @@
 from web3 import Web3,HTTPProvider
 from flask import Flask,render_template,redirect,request,jsonify,session
 import json
-import bcrypt
 from werkzeug.utils import secure_filename
 import os
 import hashlib
@@ -10,6 +9,7 @@ app=Flask(__name__)
 app.secret_key="M@keskilled0"
 
 userManagementArtifactPath="../build/contracts/userManagement.json"
+ProductManagementArtifactPath="../build/contracts/ProductManagement.json"
 blockchainServer="http://127.0.0.1:7545"
 
 def connectWithContract(wallet,artifact=userManagementArtifactPath):
@@ -31,6 +31,13 @@ def connectWithContract(wallet,artifact=userManagementArtifactPath):
     print('Contract Selected')
     return contract,web3
 
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
+# Ensure base upload folder exists
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
+
+
 @app.route('/')
 def homePage():
     return render_template('index.html')
@@ -45,7 +52,18 @@ def signupPage():
 
 @app.route('/manufacturerDashboard')
 def manufacturerDashboard():
-    return render_template('manufacturer.html')
+    contract,web3=connectWithContract(0)
+    role ='supplier'
+    response=contract.functions.viewUsersByRole(role).call()
+    print(response)
+    user_roles=[]
+    for i in response:
+        user_roles.append({
+        "address": i[0],  # Ethereum address
+        "username": i[1]
+        })
+    print(user_roles)
+    return render_template('manufacturer.html',user_roles=user_roles)
 
 @app.route('/supplierDashboard')
 def supplierDashboard():
@@ -109,5 +127,47 @@ def logout():
     session.clear()
     return redirect('/')
 
+@app.route('/mproduct', methods=['post'])
+def mProduct():
+    wallet=session['userwallet']
+    MName=request.form['manufacturer-name']
+    supplier=request.form['supplier_add']
+    MProductName=request.form['product-name']
+    MPRoductID=request.form['product-id']
+    MDate=str(request.form['expiry-date'])
+    productImage=request.files['product-image']
+
+
+    if productImage.filename == '' :
+        return render_template('Lifeinsurance.html', message="No file selected for one or more fields.")
+
+    # Create subdirectory path dynamically
+    user_folder = os.path.join(app.config['UPLOAD_FOLDER'], session['userrole'])
+    if not os.path.exists(user_folder):
+        os.makedirs(user_folder)  # Create folder if it doesn't exist
+
+    # Secure and save files
+    productImage_filename = secure_filename(productImage.filename)
+
+    productImagePath = os.path.join(user_folder, productImage_filename)
+
+    # Save files locally or to the specified directory
+    productImage.save(productImagePath)
+
+    # Generate hashes for the files
+    productImage.seek(0)  # Reset the file pointer
+    productImageHash = hashlib.sha256(productImage.read()).hexdigest()
+
+    contract,web3=connectWithContract(0,ProductManagementArtifactPath)
+
+    try:
+        tx_hash=contract.functions.addProductWithSupplier(wallet,supplier,MName,MPRoductID,MProductName,MDate,productImagePath,productImageHash).transact()
+        web3.eth.waitForTransactionReceipt(tx_hash)
+        print('Transaction Successful')
+        return render_template('manufacturer.html',message='Product added Successfully')
+    except Exception as e:
+        print(e)
+        return render_template('manufacturer.html',message='there is problem in adding Product')
+    
 if __name__=="__main__":
     app.run(host='0.0.0.0',port=4001,debug=True)

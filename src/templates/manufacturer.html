@@ -1,180 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manufacturer Dashboard</title>
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="shortcut icon" type="image/x-icon" href="../static/img/favicon.ico">
+
+  <!-- CSS here -->
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="../static/css/slicknav.css">
+  <link rel="stylesheet" href="../static/css/flaticon.css">
+  <link rel="stylesheet" href="../static/css/gijgo.css">
+  <link rel="stylesheet" href="../static/css/animate.min.css">
+  <link rel="stylesheet" href="../static/css/animated-headline.css">
+  <link rel="stylesheet" href="../static/css/magnific-popup.css">
+  <link rel="stylesheet" href="../static/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="../static/css/themify-icons.css">
+  <link rel="stylesheet" href="../static/css/slick.css">
+  <link rel="stylesheet" href="../static/css/nice-select.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+
   <style>
-    /* Existing CSS */
     body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
       background: linear-gradient(135deg, #d1eaff, #b3cde0, #d1eaff);
+      display: flex;
       flex-direction: column;
     }
-    header {
-      width: 100%;
-      background-color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      position: fixed;
-      top: 0;
-      z-index: 1000;
-    }
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #333;
-      text-decoration: none;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      margin: 0;
-      padding: 0;
-    }
-    nav ul li {
-      margin: 0 15px;
-    }
-    nav ul li a {
-      text-decoration: none;
-      font-size: 16px;
-      color: #333;
-      transition: color 0.3s;
-    }
-    nav ul li a:hover {
-      color: #4caf50;
-    }
+
     .container {
       text-align: center;
       width: 90%;
       max-width: 500px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      margin-top: 80px;
+      margin-top: 20px;
     }
+
     h1 {
       margin-bottom: 20px;
+      font-size: 24px;
     }
+
     .form-group {
       margin-bottom: 15px;
     }
+
     label {
       display: block;
       margin-bottom: 5px;
       font-size: 14px;
+      text-align: left;
     }
+
     input {
-      width: 90%;
-      padding: 8px;
+      width: 100%;
+      padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 14px;
     }
+
     button {
-      width: 90%;
-      padding: 8px;
+      width: 100%;
+      padding: 10px;
       background: #4caf50;
       color: white;
       border: none;
       border-radius: 5px;
-      font-size: 14px;
+      font-size: 16px;
       cursor: pointer;
     }
+
     button:hover {
       background: #45a049;
     }
+
+    header {
+      width: 100%;
+      background-color: white;
+    }
+
+    .center-message {
+      font-size: 16px;
+      color: #007bff;
+      text-align: center;
+    }
+
+    #supplier {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      color: #333;
+      outline: none;
+      box-sizing: border-box;
+      /* Ensures padding does not affect width */
+    }
+
+    #supplier:focus {
+      border-color: #4caf50;
+      background-color: #fff;
+    }
+
+    #supplier option {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    #supplier option:disabled {
+      color: #999;
+    }
+
+    /* Optional: Style for the first disabled option (Select a Supplier) */
+    #supplier option:first-child {
+      font-weight: bold;
+      color: #007bff;
+    }
   </style>
 </head>
+
 <body>
   <header>
-    <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Service</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="login.html">Logout</a></li>
-      </ul>
-    </nav>
+    <div class="header-area">
+      <div class="main-header header-sticky">
+        <div class="container-fluid">
+          <div class="row align-items-center">
+            <div class="col-xl-2 col-lg-2 col-md-1">
+              <div class="logo">
+                <a href="index.html"><img src="../static/img/logo/logo.png" alt="Logo"></a>
+              </div>
+            </div>
+            <div class="col-xl-10 col-lg-10 col-md-10">
+              <div class="menu-main d-flex align-items-center justify-content-end">
+                <div class="main-menu f-right d-none d-lg-block">
+                  <nav>
+                    <ul id="navigation">
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="about.html">About</a></li>
+                      <li><a href="services.html">Services</a></li>
+                      <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mobile_menu d-block d-lg-none"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
 
   <div class="container">
     <h1>Manufacturer Dashboard</h1>
-    <form onsubmit="addProduct(event)">
+    <form action="/mproduct" method="post" enctype="multipart/form-data">
       <div class="form-group">
         <label for="manufacturer-name">Manufacturer Name</label>
-        <input type="text" id="manufacturer-name" placeholder="Enter manufacturer name" required>
+        <input type="text" id="manufacturer-name" name="manufacturer-name" placeholder="Enter manufacturer name"
+          required>
+      </div>
+      <div class="form-group">
+        <label for="supplier">Supplier:</label>
+        <select id="supplier" name="supplier_add" required>
+          <option value="" disabled selected>Select a Supplier</option>
+          {% if user_roles %}
+            {% for user in user_roles %}
+              <option value="{{ user.address }}">{{ user.username }} - {{ user.address }}</option>
+            {% endfor %}
+          {% else %}
+            <option value="" disabled>No suppliers available</option>
+          {% endif %}
+        </select>
       </div>
       <div class="form-group">
         <label for="product-id">Product ID</label>
-        <input type="text" id="product-id" placeholder="Enter unique product ID" required>
+        <input type="text" id="product-id" name="product-id" placeholder="Enter unique product ID" required>
       </div>
       <div class="form-group">
         <label for="product-name">Product Name</label>
-        <input type="text" id="product-name" placeholder="Enter product name" required>
+        <input type="text" id="product-name" name="product-name" placeholder="Enter product name" required>
       </div>
       <div class="form-group">
         <label for="expiry-date">Expiry Date</label>
-        <input type="date" id="expiry-date" required>
+        <input type="date" id="expiry-date" name="expiry-date" required>
       </div>
       <div class="form-group">
         <label for="product-image">Product Image</label>
-        <input type="file" id="product-image" accept="image/*" required>
+        <input type="file" id="product-image" name="product-image" accept="image/*" required>
       </div>
       <button type="submit">Add Product</button>
     </form>
+    <center><span class="center-message">{{ message }}</span></center>
   </div>
-
-  <script>
-    function addProduct(event) {
-      event.preventDefault();
-
-      const manufacturerName = document.getElementById('manufacturer-name').value;
-      const productId = document.getElementById('product-id').value;
-      const productName = document.getElementById('product-name').value;
-      const expiryDate = document.getElementById('expiry-date').value;
-      const productImage = document.getElementById('product-image').files[0];
-
-      if (!productImage) {
-        alert('Please upload an image.');
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onloadend = function () {
-        const product = {
-          manufacturer: manufacturerName,
-          id: productId,
-          name: productName,
-          expiry: expiryDate,
-          image: reader.result, // Store the image as base64 string
-        };
-
-        // Retrieve stored products or initialize an empty array
-        const products = JSON.parse(localStorage.getItem('products')) || [];
-        products.push(product);
-
-        // Save updated list to localStorage
-        localStorage.setItem('products', JSON.stringify(products));
-
-        // Redirect to the product list page
-        window.location.href = 'product-list.html';
-      };
-
-      reader.readAsDataURL(productImage);
-    }
-  </script>
 </body>
+
 </html>
