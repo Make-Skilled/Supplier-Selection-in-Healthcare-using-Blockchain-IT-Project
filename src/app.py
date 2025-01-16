@@ -1,5 +1,5 @@
 from web3 import Web3,HTTPProvider
-from flask import Flask,render_template,redirect,request,jsonify,session
+from flask import Flask,render_template,redirect,request,session,url_for
 import json
 from werkzeug.utils import secure_filename
 import os
@@ -50,6 +50,18 @@ def loginPage():
 def signupPage():
     return render_template('signup.html')
 
+@app.route('/contact')
+def contactPage():
+    return render_template('contact.html')
+
+@app.route('/services')
+def servicesPage():
+    return render_template('services.html')
+
+@app.route('/about')
+def aboutPage():
+    return render_template('about.html')
+
 @app.route('/manufacturerDashboard')
 def manufacturerDashboard():
     contract,web3=connectWithContract(0)
@@ -67,11 +79,30 @@ def manufacturerDashboard():
 
 @app.route('/supplierDashboard')
 def supplierDashboard():
-    return render_template('supplier.html')
+    message = request.args.get('message','')
+    wallet=session['userwallet']
+    contract1,web3=connectWithContract(0)
+    role ='hospital'
+    response=contract1.functions.viewUsersByRole(role).call()
+    roles=[]
+    for i in response:
+        roles.append({
+        "address": i[0],  # Ethereum address
+        "username": i[1]
+        })
+    contract,web3=connectWithContract(wallet,ProductManagementArtifactPath)
+    response1=contract.functions.getProductsBySupplier(wallet).call()
+    print(response1)
+    products=[]
+    for i in response1:
+        products.append(i)
+    print(products)
+    return render_template('supplier.html',roles=roles,product=products,message=message)
 
 @app.route('/hospitalDashboard')
 def hospitalDashboard():
-    return render_template('hospital.html')
+    response=''
+    return render_template('hospital.html',response=response)
 
 @app.route('/register',methods=['POST']) # page (1 Route), page (2 Route)
 def register():
@@ -168,6 +199,55 @@ def mProduct():
     except Exception as e:
         print(e)
         return render_template('manufacturer.html',message='there is problem in adding Product')
+    
+@app.route('/supplier',methods=['post'])
+def Supplier():
+    wallet=session['userwallet']
+    hospital=request.form['hospital_add']
+    productID=request.form['product']
+
+    contract,web3=connectWithContract(0,ProductManagementArtifactPath)
+
+    try:
+        tx_hash=contract.functions.linkSupplierWithHospital(wallet,hospital,productID).transact()
+        web3.eth.waitForTransactionReceipt(tx_hash)
+        print('Transaction Successful')
+        return redirect(url_for('supplierDashboard',message='Hospital added Successfully'))
+    except Exception as e:
+        print(e)
+        return redirect(url_for('supplierDashboard',message='there is problem in adding Hospital'))
+    
+@app.route('/hospital', methods=['POST'])
+def Hospital():
+    productId = request.form['productid']
+    contract, web3 = connectWithContract(0, ProductManagementArtifactPath)
+    try:
+        response = contract.functions.getProductDetails(productId).call()
+        print(response)
+
+        # Check if the response contains valid data
+        if not response:
+            return render_template('hospital.html', message="No product found with this ID.")
+
+        # Create a dictionary to pass to the template
+        product_details = {
+            "manufacturer": response[0],
+            "supplier": response[1],
+            "hospital": response[2],
+            "product_id": response[3],
+            "product_name": response[4],
+            "expiry_date": response[5],
+            "image_url": response[6],  # Path to image
+            "image_hash": response[7]
+        }
+
+        return render_template('hospital.html', product=product_details)
+    except Exception as e:
+        # Extract the error message
+        message = "Product does not exist" if "Product does not exist" in str(e) else "An error occurred"
+        print(message)
+        return render_template('hospital.html', message=message)
+
     
 if __name__=="__main__":
     app.run(host='0.0.0.0',port=4001,debug=True)

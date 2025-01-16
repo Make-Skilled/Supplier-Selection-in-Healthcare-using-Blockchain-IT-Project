@@ -1,208 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Supplier Details</title>
-  <style>
-    /* General Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <title>Manufacturer Dashboard</title>
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="shortcut icon" type="image/x-icon" href="../static/img/favicon.ico">
 
+  <!-- CSS here -->
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="../static/css/slicknav.css">
+  <link rel="stylesheet" href="../static/css/flaticon.css">
+  <link rel="stylesheet" href="../static/css/gijgo.css">
+  <link rel="stylesheet" href="../static/css/animate.min.css">
+  <link rel="stylesheet" href="../static/css/animated-headline.css">
+  <link rel="stylesheet" href="../static/css/magnific-popup.css">
+  <link rel="stylesheet" href="../static/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="../static/css/themify-icons.css">
+  <link rel="stylesheet" href="../static/css/slick.css">
+  <link rel="stylesheet" href="../static/css/nice-select.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+
+  <style>
     body {
-      font-family: 'Arial', sans-serif;
+      min-height: 100vh;
+      /* background: linear-gradient(135deg, #d1eaff, #b3cde0, #d1eaff); */
       background: url('https://static.vecteezy.com/system/resources/previews/024/675/760/original/green-background-hd-wallpaperss-free-download-free-vector.jpg') no-repeat center center/cover;
-      background-size: cover;
-      color: #ffffff;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      flex-direction: column;
     }
 
     .container {
-      width: 900px;
-      background: rgba(195, 134, 81, 0.8);
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(8, 8, 8, 0.416);
-      padding: 20px;
-      position: relative;
-    }
-
-    h1 {
       text-align: center;
-      margin-bottom: 20px;
-      font-size: 2rem;
-      color: #37a92f;
-    }
-
-    .search-bar {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-
-    .search-bar input {
-      padding: 8px 12px;
-      border: none;
-      border-radius: 5px;
-      width: 200px;
-    }
-
-    .info {
-      margin-bottom: 20px;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 40px;
-      border-radius: 15px;
-      height: 200px;
-    }
-
-    .info span {
-      display: block;
-      margin: 15px 0;
-    }
-
-    .info strong {
-      color: #54e73d;
-    }
-
-    .table-container {
-      position: relative;
-      overflow: hidden;
-      height: 200px; /* Increased height for sliding table */
+      width: 90%;
+      max-width: 500px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       margin-top: 20px;
     }
 
-    .sliding-table {
-      display: flex;
-      flex-direction: column;
-      transition: transform 1s ease-in-out;
+    h1 {
+      margin-bottom: 20px;
+      font-size: 24px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: rgba(255, 255, 255, 0.1);
+    .form-group {
+      margin-bottom: 15px;
     }
 
-    table th, table td {
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
       text-align: left;
+    }
+
+    input {
+      width: 100%;
       padding: 10px;
-      color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
     }
 
-    table th {
-      background: rgba(0, 0, 0, 0.9);
-      color: #00ffcc;
-      text-transform: uppercase;
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
     }
 
-    tbody tr {
-      height: 60px; /* Adjusted for row spacing */
+    button:hover {
+      background: #45a049;
+    }
+
+    header {
+      width: 100%;
+      background-color: white;
+    }
+
+    .center-message {
+      font-size: 16px;
+      color: #007bff;
+      text-align: center;
+    }
+
+    #hospital {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      color: #333;
+      outline: none;
+      box-sizing: border-box;
+      /* Ensures padding does not affect width */
+    }
+
+    #hospital:focus {
+      border-color: #4caf50;
+      background-color: #fff;
+    }
+
+    #hospital option {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    #hospital option:disabled {
+      color: #999;
+    }
+
+    /* Optional: Style for the first disabled option (Select a Supplier) */
+    #hospital option:first-child {
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    #product {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      color: #333;
+      outline: none;
+      box-sizing: border-box;
+      /* Ensures padding does not affect width */
+    }
+
+    #product:focus {
+      border-color: #4caf50;
+      background-color: #fff;
+    }
+
+    #product option {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    #product option:disabled {
+      color: #999;
+    }
+
+    /* Optional: Style for the first disabled option (Select a Supplier) */
+    #product option:first-child {
+      font-weight: bold;
+      color: #007bff;
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <!-- Search Bar -->
-    <div class="search-bar">
-      <input type="text" id="searchBar" placeholder="Search Supplier...">
-    </div>
-
-    <h1>Supplier Details</h1>
-
-    <!-- Enlarged Supplier Details -->
-    <div class="info">
-      <span><strong>Supplier ID:</strong> SUP-00123</span>
-      <span><strong>Supplier Name:</strong> Global Health Supplies</span>
-      <span><strong>Location:</strong> Los Angeles, CA</span>
-    </div>
-
-    <!-- Enlarged Sliding Table -->
-    <div class="table-container">
-      <div class="sliding-table" id="slidingTable">
-        <table>
-          <thead>
-            <tr>
-              <th>Product Name</th>
-              <th>Product ID</th>
-              <th>Delivery Date</th>
-              <th>Delivery Time</th>
-              <th>Expiry Date</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody">
-            <tr>
-              <td>Paracetamol</td>
-              <td>PROD-001</td>
-              <td>2024-12-10</td>
-              <td>10:30 AM</td>
-              <td>2026-06-15</td>
-            </tr>
-            <tr>
-              <td>Vitamin C</td>
-              <td>PROD-002</td>
-              <td>2024-12-12</td>
-              <td>2:00 PM</td>
-              <td>2025-11-01</td>
-            </tr>
-            <tr>
-              <td>Loperamide</td>
-              <td>PROD-003</td>
-              <td>2024-12-15</td>
-              <td>4:15 PM</td>
-              <td>2026-01-20</td>
-            </tr>
-            <tr>
-              <td>Ibuprofen</td>
-              <td>PROD-004</td>
-              <td>2024-12-18</td>
-              <td>11:00 AM</td>
-              <td>2025-10-30</td>
-            </tr>
-            <tr>
-              <td>Laxatives</td>
-              <td>PROD-005</td>
-              <td>2024-12-20</td>
-              <td>1:00 PM</td>
-              <td>2026-03-15</td>
-            </tr>
-          </tbody>
-        </table>
+  <header>
+    <div class="header-area">
+      <div class="main-header header-sticky">
+        <div class="container-fluid">
+          <div class="row align-items-center">
+            <div class="col-xl-2 col-lg-2 col-md-1">
+              <div class="logo">
+                <a href="index.html"><img src="../static/img/logo/logo.png" alt="Logo"></a>
+              </div>
+            </div>
+            <div class="col-xl-10 col-lg-10 col-md-10">
+              <div class="menu-main d-flex align-items-center justify-content-end">
+                <div class="main-menu f-right d-none d-lg-block">
+                  <nav>
+                    <ul id="navigation">
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="about.html">About</a></li>
+                      <li><a href="services.html">Services</a></li>
+                      <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mobile_menu d-block d-lg-none"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </header>
+
+  <div class="container">
+    <h1>Supplier Dashboard</h1>
+    <form action="/supplier" method="post">
+      <div class="form-group">
+        <label for="hospital">Hospital:</label>
+        <select id="hospital" name="hospital_add" required>
+          <option value="" disabled selected>Select a Supplier</option>
+          {% if roles %}
+          {% for user in roles %}
+          <option value="{{ user.address }}">{{ user.username }} - {{ user.address }}</option>
+          {% endfor %}
+          {% else %}
+          <option value="" disabled>No suppliers available</option>
+          {% endif %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="product">Select a Product</label>
+        <select id="product" name="product" required>
+          <option value="" disabled selected>Select a Product</option>
+          {% for products in product %}
+          <option value="{{ products }}">{{ products }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit">Add Product</button>
+    </form>
+    <center><span class="center-message">{{ message }}</span></center>
   </div>
-
-  <script>
-    const slidingTable = document.getElementById('slidingTable');
-    const rows = document.querySelectorAll('tbody tr');
-    const rowHeight = rows[0].offsetHeight;
-    let currentRow = 0;
-
-    function slideTable() {
-      currentRow = (currentRow + 1) % rows.length; // Loop back to the top
-      const offset = -currentRow * rowHeight;
-      slidingTable.style.transform = `translateY(${offset}px)`;
-    }
-
-    setInterval(slideTable, 3000); // Slide every 3 seconds
-
-    // Search functionality
-    const searchBar = document.getElementById('searchBar');
-    const tableBody = document.getElementById('tableBody');
-
-    searchBar.addEventListener('input', () => {
-      const query = searchBar.value.toLowerCase();
-      rows.forEach(row => {
-        const rowText = row.textContent.toLowerCase();
-        row.style.display = rowText.includes(query) ? '' : 'none';
-      });
-    });
-  </script>
 </body>
+
 </html>
