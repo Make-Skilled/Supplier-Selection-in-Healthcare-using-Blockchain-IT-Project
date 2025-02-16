@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manufacturer Dashboard</title>
+  <title>Supplier Dashboard</title>
   <link rel="manifest" href="site.webmanifest">
   <link rel="shortcut icon" type="image/x-icon" href="../static/img/favicon.ico">
 
@@ -26,7 +26,6 @@
   <style>
     body {
       min-height: 100vh;
-      /* background: linear-gradient(135deg, #d1eaff, #b3cde0, #d1eaff); */
       background: url('https://static.vecteezy.com/system/resources/previews/024/675/760/original/green-background-hd-wallpaperss-free-download-free-vector.jpg') no-repeat center center/cover;
       display: flex;
       flex-direction: column;
@@ -59,12 +58,24 @@
       text-align: left;
     }
 
+    select,
     input {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border: 1px solid #ccc;
       border-radius: 5px;
+      background-color: #f9f9f9;
       font-size: 14px;
+      font-family: Arial, sans-serif;
+      color: #333;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: #4caf50;
+      background-color: #fff;
     }
 
     button {
@@ -93,72 +104,25 @@
       text-align: center;
     }
 
-    #hospital {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-      font-size: 14px;
-      font-family: Arial, sans-serif;
-      color: #333;
-      outline: none;
-      box-sizing: border-box;
-      /* Ensures padding does not affect width */
-    }
-
-    #hospital:focus {
-      border-color: #4caf50;
-      background-color: #fff;
-    }
-
-    #hospital option {
+    select option {
       padding: 10px;
       font-size: 14px;
     }
 
-    #hospital option:disabled {
+    select option:disabled {
       color: #999;
     }
 
-    /* Optional: Style for the first disabled option (Select a Supplier) */
-    #hospital option:first-child {
+    select option:first-child {
       font-weight: bold;
       color: #007bff;
     }
 
-    #product {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-      font-size: 14px;
-      font-family: Arial, sans-serif;
-      color: #333;
-      outline: none;
-      box-sizing: border-box;
-      /* Ensures padding does not affect width */
-    }
-
-    #product:focus {
-      border-color: #4caf50;
-      background-color: #fff;
-    }
-
-    #product option {
-      padding: 10px;
-      font-size: 14px;
-    }
-
-    #product option:disabled {
-      color: #999;
-    }
-
-    /* Optional: Style for the first disabled option (Select a Supplier) */
-    #product option:first-child {
-      font-weight: bold;
-      color: #007bff;
+    .product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
     }
   </style>
 </head>
@@ -171,7 +135,7 @@
           <div class="row align-items-center">
             <div class="col-xl-2 col-lg-2 col-md-1">
               <div class="logo">
-                <a href="index.html"><img src="../static/img/logo/logo.png" alt="Logo"></a>
+                <a href="/index"><img src="../static/img/logo/logo.png" alt="Logo"></a>
               </div>
             </div>
             <div class="col-xl-10 col-lg-10 col-md-10">
@@ -179,10 +143,11 @@
                 <div class="main-menu f-right d-none d-lg-block">
                   <nav>
                     <ul id="navigation">
-                      <li><a href="index.html">Home</a></li>
-                      <li><a href="about.html">About</a></li>
-                      <li><a href="services.html">Services</a></li>
-                      <li><a href="contact.html">Contact</a></li>
+                      <li><a href="/index">Home</a></li>
+                      <li><a href="/about">About</a></li>
+                      <li><a href="/services">Services</a></li>
+                      <li><a href="/contact">Contact</a></li>
+                      <li><a href="/logout">Logout</a></li>
                     </ul>
                   </nav>
                 </div>
@@ -217,14 +182,32 @@
         <label for="product">Select a Product</label>
         <select id="product" name="product" required>
           <option value="" disabled selected>Select a Product</option>
-          {% for products in product %}
-          <option value="{{ products }}">{{ products }}</option>
+          {% for item in items %}
+          <option value="{{ item }}">{{ item }}</option>
           {% endfor %}
         </select>
       </div>
       <button type="submit">Add Product</button>
     </form>
     <center><span class="center-message">{{ message }}</span></center>
+  </div>
+
+  <div class="container mx-auto px-6 py-12">
+    <h2 class="text-center text-4xl font-extrabold text-gray-800 mb-8">📦 Products Assigned to Me</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      {% for product in products %}
+      <div class="bg-white shadow-lg rounded-2xl overflow-hidden transition-all card border border-gray-200">
+        <img src="{{ product.image_path }}" alt="{{ product.product_name }}" class="w-full h-56 object-cover">
+        <div class="p-6">
+          <h5 class="text-2xl font-semibold text-gray-900"><strong>Product Name:</strong>{{ product.product_name }}</h5>
+          <p class="text-gray-600 text-sm mt-3"><strong>ID:</strong> {{ product.product_id }}</p>
+          <p class="text-gray-600 text-sm"><strong>Manufacture Date:</strong> {{ product.manufacture_date }}</p>
+          <p class="text-gray-600 text-sm"><strong>Manufacturer:</strong> {{ product.manufacturer_address }}</p>
+          <p class="text-gray-600 text-sm"><strong>Hospital:</strong> {{ product.hospital_address }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
   </div>
 </body>
 

@@ -78,29 +78,57 @@ def manufacturerDashboard():
     return render_template('manufacturer.html',user_roles=user_roles)
 
 @app.route('/supplierDashboard')
-def supplierDashboard():
-    message = request.args.get('message','')
-    wallet=session['userwallet']
-    contract1,web3=connectWithContract(0)
-    role ='hospital'
-    response=contract1.functions.viewUsersByRole(role).call()
-    roles=[]
-    for i in response:
-        roles.append({
-        "address": i[0],  # Ethereum address
-        "username": i[1]
-        })
-    contract,web3=connectWithContract(wallet,ProductManagementArtifactPath)
+def supplier_Dashboard():
+    message = request.args.get('message', '')
+    wallet = session.get('userwallet')
+
+    # Connect with User Management Contract to get hospitals
+    contract1, web3 = connectWithContract(0)
+    role = 'hospital'
+    response = contract1.functions.viewUsersByRole(role).call()
+    
+    roles = [{"address": i[0], "username": i[1]} for i in response]  # Extract hospital details
+
+    # Connect with Product Management Contract to get supplier products
+    contract, web3 = connectWithContract(wallet, ProductManagementArtifactPath)
+    product_ids = contract.functions.getProductsBySupplier(wallet).call()
+    
+    # Fetch all supplier details
+    supplier_dict = {user["address"]: user["username"] for user in roles}
+
     response1=contract.functions.getProductsBySupplier(wallet).call()
     print(response1)
-    products=[]
+    items=[]
     for i in response1:
-        products.append(i)
-    print(products)
-    return render_template('supplier.html',roles=roles,product=products,message=message)
+        items.append(i)
+    print(items)
+    
+    products = []
+    for pid in product_ids:
+        product = contract.functions.getProductDetails(pid).call()
+        
+        supplier_address = product[1]  # Extract supplier address
+        supplier_name = session['username']
+        products.append({
+            "manufacturer_address": product[0],
+            "supplier_address": supplier_address,
+            "supplier_name": supplier_name,  # Add supplier name for display
+            "hospital_address": product[2],
+            "product_id": product[3],
+            "product_name": product[4],
+            "manufacture_date": product[5],
+            "image_path": product[6],
+            "hash": product[7]
+        })
+
+    print(products)  # ✅ Check output in terminal
+
+    # Pass all data to the template
+    return render_template('supplier.html', roles=roles, products=products, message=message,items=items)
+
 
 @app.route('/hospitalDashboard')
-def hospitalDashboard():
+def hospital_Dashboard():
     response=''
     return render_template('hospital.html',response=response)
 
@@ -200,6 +228,51 @@ def mProduct():
         print(e)
         return render_template('manufacturer.html',message='there is problem in adding Product')
     
+@app.route("/mdash")
+def mDashboard():
+    wallet = session['userwallet']
+    
+    # Correctly unpack contract and web3 only once
+    contract, web3 = connectWithContract(0, ProductManagementArtifactPath)
+    contract1, _ = connectWithContract(0, userManagementArtifactPath)  # Ignore the second returned value
+
+    # Fetch suppliers
+    role = 'supplier'
+    response = contract1.functions.viewUsersByRole(role).call()
+
+    # Ensure response is structured as expected before creating a dictionary
+    supplier_dict = {}
+    for i in response:
+        if len(i) >= 2:  # Ensure there's an address and a username
+            supplier_dict[i[0]] = i[1]  # {address: username}
+
+    # Fetch product IDs for the manufacturer
+    product_ids = contract.functions.getProductsByManufacturer(wallet).call()
+
+    # Fetch product details and supplier information
+    product_details = []
+    for pid in product_ids:
+        product = contract.functions.getProductDetails(pid).call()
+        
+        supplier_address = product[1]  # Extract supplier address
+        supplier_name = supplier_dict.get(supplier_address, "Unknown Supplier")  # Lookup name
+
+        # Append new data structure with supplier info
+        product_details.append({
+            "manufacturer_address": product[0],
+            "supplier_address": supplier_address,
+            "product_id": product[3],
+            "product_name": product[4],
+            "manufacture_date": product[5],
+            "image_path": product[6],
+            "hash": product[7],
+            "supplier_name": supplier_name
+        })
+
+    # Pass the updated data to the template
+    return render_template("mdash.html", product_details=product_details)
+
+
 @app.route('/supplier',methods=['post'])
 def Supplier():
     wallet=session['userwallet']
@@ -212,10 +285,10 @@ def Supplier():
         tx_hash=contract.functions.linkSupplierWithHospital(wallet,hospital,productID).transact()
         web3.eth.waitForTransactionReceipt(tx_hash)
         print('Transaction Successful')
-        return redirect(url_for('supplierDashboard',message='Hospital added Successfully'))
+        return redirect(url_for('supplier_Dashboard',message='Hospital added Successfully'))
     except Exception as e:
         print(e)
-        return redirect(url_for('supplierDashboard',message='there is problem in adding Hospital'))
+        return redirect(url_for('supplier_Dashboard',message='there is problem in adding Hospital'))
     
 @app.route('/hospital', methods=['POST'])
 def Hospital():
@@ -248,6 +321,5 @@ def Hospital():
         print(message)
         return render_template('hospital.html', message=message)
 
-    
 if __name__=="__main__":
     app.run(host='0.0.0.0',port=4001,debug=True)
